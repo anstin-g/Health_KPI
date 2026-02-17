@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Health App</title>
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo-container">
+                <img src="/Health_KPI_backend/static/Asofttek Logo-01.png" alt="Health App Logo" class="logo">
+            </div>
+            
+            <div class="app-title">
+                <h1>My Health App</h1>
+            </div>
+            
+            <div class="logout-container">
+                <button class="logout-btn"  id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content">
+        <h2>Welcome to My Health App</h2>
+        <p>Your personal health companion</p>
+    </div>
+    <script>
+        document.getElementById("logoutBtn").addEventListener("click", function() {
+            window.location.href = "{% url 'log_out' %}";  
+        });
+    </script>
+</body>
+</html>

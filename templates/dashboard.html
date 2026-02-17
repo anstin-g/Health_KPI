@@ -1,0 +1,81 @@
+<!-- dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Selection</title>
+    <link rel="stylesheet" href="/static/dashboard.css" />
+    <link rel="stylesheet" href="/static/navbar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation bar component -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo-container">
+                <img src="/static/Asofttek Logo-01.png" alt="Health App Logo" class="logo" id="logo">
+            </div>
+            
+            <div class="app-title">
+                <h1>My Health App</h1>
+            </div>
+            
+            <div class="logout-container">
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <h1>Document Selection</h1>
+        
+        <!-- Top 3 document cards section -->
+        <section class="featured-documents">
+            <h2>Latest Documents</h2>
+            <div class="container" id="featured-document-list"></div>
+        </section>
+
+        <!-- Document Review Popup -->
+        <div id="documentReviewOverlay" class="document-review-overlay" style="display: none;">
+            <div class="document-review-modal">
+                <div class="document-review-header">
+                    <h2>Pending Documents</h2>
+                </div>
+                <div id="documentCardContainer" class="document-card-container">
+                </div>
+            </div>
+        </div>
+
+        <!-- All documents table section -->
+        <section class="all-documents">
+            <h2>All Documents</h2>
+            <div class="table-container">
+                <table id="documents-table">
+                    <thead>
+                        <tr>
+                            <th>File Name</th>
+                            <th>Details</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <!-- Table rows will be populated dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Analysis button -->
+        <a id="analyze-btn" class="analyze-btn" href="/analyse_kpi">
+            View My Parameters
+        </a>
+    </div>
+    
+    <!-- Include modular JavaScript files -->
+    <script src="/static/js/navigation.js"></script>
+    <script src="/static/js/document-loader.js"></script>
+</body>
+</html>

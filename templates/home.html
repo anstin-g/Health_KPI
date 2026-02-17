@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health KPI</title>
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+    <link rel="stylesheet" href="/static/navbar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo-container">
+                <img src="/static/Asofttek Logo-01.png" alt="Health App Logo" class="logo">
+            </div>
+            
+            <div class="app-title">
+                <h1>My Health App</h1>
+            </div>
+            
+            <div class="logout-container">
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div class="main-container">
+        <div class="left-panel">
+            <h1>Health KPI</h1>
+            <div class="button-container">
+                <a href="{% url 'upload_files' %}" class="button">Upload Documents</a>
+                <p class="note">* Please upload PDF format only</p> 
+                <a href="{% url 'dashboard' %}" class="button">Dashboard</a>
+            </div>
+        </div>
+        <div class="right-panel">
+            <h2>Tracked Parameters</h2>
+            <div class="parameter-groups">
+                <div class="group">
+                    <h3>Blood Test Type</h3>
+                    <ul>
+                        <li>Haemoglobin</li>
+                        <li>RBC Count</li>
+                        <li>PCV</li>
+                        <li>MCV</li>
+                        <li>MCH</li>
+                        <li>MCHC</li>
+                        <li>RDW-CV</li>
+                        <li>RDW(SD)</li>
+                        <li>TLC</li>
+                    </ul>
+                </div>
+    
+                <div class="group">
+                    <h3>Differential Leukocyte Count</h3>
+                    <ul>
+                        <li>Neutrophils</li>
+                        <li>Lymphocytes</li>
+                        <li>Monocytes</li>
+                    </ul>
+                </div>
+    
+                <div class="group">
+                    <h3>Absolute Leukocyte Count</h3>
+                    <ul>
+                        <li>Neutrophils</li>
+                        <li>Eosinophils</li>
+                        <li>Basophils</li>
+                    </ul>
+                </div>
+    
+                <div class="group">
+                    <h3>Platelet Parameters</h3>
+                    <ul>
+                        <li>Platelet Count</li>
+                        <li>MPV</li>
+                        <li>PCT</li>
+                        <li>PDW</li>
+                        <li>P LCR</li>
+                        <li>PLCC</li>
+                        <li>Mentzer Index</li>
+                        <li>ESR</li>
+                        <li>HbA1C</li>
+                        <li>Estimated Average Glucose</li>
+                        <li>Glucose Fasting</li>
+                        <li>C Peptide Test</li>
+                        <li>HOMAIR with C Peptide</li>
+                        <li>Insulin Fasting</li>
+                        <li>Beta Cell Function</li>
+                        <li>Insulin Sensitivity (%)</li>
+                        <li>HOMAIR Index</li>
+                    </ul>
+                </div>
+    
+                <!-- Add other groups here similarly: LiverFunctionTest, KidneyFunctionTest, etc. -->
+    
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+
+        document.getElementById("logo").addEventListener("click", function() {
+            window.location.href = "/home";  
+        });
+
+    </script>
+    <script>
+        document.getElementById("logoutBtn").addEventListener("click", function() {
+            window.location.href = "/";  
+        });
+    </script>
+</body>
+</html>

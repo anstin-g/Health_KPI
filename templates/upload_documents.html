@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload Portal</title>
+    <link rel="stylesheet" href="/static/navbar.css">
+    <link rel="stylesheet" href="/static/upload_files.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo-container">
+                <img src="/static/Asofttek Logo-01.png" alt="Health App Logo" class="logo" id="logo">
+            </div>
+            
+            <div class="app-title">
+                <h1>My Health App</h1>
+            </div>
+            
+            <div class="logout-container">
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div class="app-container">
+        <header>
+            <h1><i class="fas fa-cloud-upload-alt"></i> File Upload Portal</h1>
+            <p>Upload files and folders securely with just a few clicks</p>
+        </header>
+
+        <div class="upload-section">
+            <div class="upload-card">
+                <div class="upload-option">
+                    <label for="folderInput" class="upload-label">
+                        <i class="fas fa-folder-open"></i>
+                        <span>Select a Folder</span>
+                    </label>
+                    <input type="file" id="folderInput" multiple webkitdirectory>
+                </div>
+
+                <div class="upload-option">
+                    <label for="fileInput" class="upload-label">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Select Files</span>
+                    </label>
+                    <input type="file" id="fileInput" multiple>
+                </div>
+
+                <div class="capture-option">
+                    <button id="cameraButton" class="btn btn-secondary">
+                        <i class="fas fa-camera"></i> Capture Photo
+                    </button>
+                </div>
+            </div>
+
+            <div class="camera-container" id="cameraContainer">
+                <video id="video" autoplay></video>
+                <canvas id="canvas"></canvas>
+                <button id="captureButton" class="btn btn-primary">
+                    <i class="fas fa-camera"></i> Take Picture
+                </button>
+            </div>
+
+            <div class="file-naming">
+                <input type="text" id="fileName" placeholder="Captured file name (optional)">
+                <button id="addFileButton" class="btn btn-secondary">Add File</button>
+            </div>
+
+            <button id="uploadButton" class="btn btn-primary upload-btn">
+                <i class="fas fa-upload"></i> Upload Files
+            </button>
+        </div>
+
+        <div class="preview-section">
+            <h2>Files to Upload</h2>
+            <div class="file-list" id="fileList">
+                <div class="empty-state">
+                    <!-- <i class="fas fa-file-upload"></i>
+                    <p>Your selected files will appear here</p> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const folderInput = document.getElementById('folderInput');
+        const fileInput = document.getElementById('fileInput');
+        const fileNameInput = document.getElementById('fileName');
+        const addFileButton = document.getElementById('addFileButton');
+        const uploadButton = document.getElementById('uploadButton');
+        const cameraButton = document.getElementById('cameraButton');
+        const captureButton = document.getElementById('captureButton');
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const fileList = document.getElementById('fileList');
+        const cameraContainer = document.getElementById('cameraContainer');
+
+        let uploadedFiles = [];
+
+        function handleFileSelection(input) {
+            if (input.files.length === 0) return;
+            
+            const emptyState = fileList.querySelector('.empty-state');
+            if (emptyState) {
+                fileList.removeChild(emptyState);
+            }
+
+            for (let file of input.files) {
+                const filePath = file.webkitRelativePath || file.name;
+                uploadedFiles.push({ file, name: filePath });
+                
+                const fileSize = (file.size / 1024).toFixed(2);
+                const fileType = file.type.split('/')[0] || 'document';
+                
+                const item = document.createElement('div');
+                item.className = 'file-item';
+                
+                let iconClass = 'fa-file';
+                if (fileType === 'image') iconClass = 'fa-file-image';
+                else if (fileType === 'video') iconClass = 'fa-file-video';
+                else if (fileType === 'audio') iconClass = 'fa-file-audio';
+                else if (file.name.endsWith('.pdf')) iconClass = 'fa-file-pdf';
+                
+                item.innerHTML = `
+                    <div class="file-icon">
+                        <i class="fas ${iconClass}"></i>
+                    </div>
+                    <div class="file-details">
+                        <div class="file-name">${filePath}</div>
+                        <div class="file-meta">${fileSize} KB</div>
+                    </div>
+                    <div class="file-actions">
+                        <button class="remove-file" data-index="${uploadedFiles.length - 1}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+                fileList.appendChild(item);
+                
+                item.querySelector('.remove-file').addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    uploadedFiles.splice(index, 1);
+                    fileList.removeChild(item);
+                    
+                    if (uploadedFiles.length === 0) {
+                        showEmptyState();
+                    }
+                });
+            }
+        }
+
+        function showEmptyState() {
+            const emptyState = document.createElement('div');
+            emptyState.className = 'empty-state';
+            emptyState.innerHTML = `
+                <i class="fas fa-file-upload"></i>
+                <p>Your selected files will appear here</p>
+            `;
+            fileList.appendChild(emptyState);
+        }
+
+        folderInput.addEventListener('change', () => handleFileSelection(folderInput));
+        fileInput.addEventListener('change', () => handleFileSelection(fileInput));
+
+        addFileButton.addEventListener('click', () => {
+            if (fileInput.files.length > 0) {
+                handleFileSelection(fileInput);
+            } else if (folderInput.files.length > 0) {
+                handleFileSelection(folderInput);
+            } else {
+                alert('Please select files or a folder first');
+            }
+        });
+
+        cameraButton.addEventListener('click', async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+                cameraContainer.classList.add('active');
+                captureButton.style.display = 'block';
+            } catch (err) {
+                alert('Error accessing camera: ' + err.message);
+            }
+        });
+
+        captureButton.addEventListener('click', () => {
+            const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            canvas.toBlob(blob => {
+                const customName = fileNameInput.value || `Photo_${Date.now()}.jpg`;
+                uploadedFiles.push({ file: blob, name: customName });
+                
+
+                const emptyState = fileList.querySelector('.empty-state');
+                if (emptyState) {
+                    fileList.removeChild(emptyState);
+                }
+                
+                const item = document.createElement('div');
+                item.className = 'file-item';
+                item.innerHTML = `
+                    <div class="file-icon">
+                        <i class="fas fa-file-image"></i>
+                    </div>
+                    <div class="file-details">
+                        <div class="file-name">${customName}</div>
+                        <div class="file-meta">Captured Image</div>
+                    </div>
+                    <div class="file-actions">
+                        <button class="remove-file" data-index="${uploadedFiles.length - 1}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+                fileList.appendChild(item);
+                
+                item.querySelector('.remove-file').addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    uploadedFiles.splice(index, 1);
+                    fileList.removeChild(item);
+                    if (uploadedFiles.length === 0) {
+                        showEmptyState();
+                    }
+                });
+                cameraContainer.classList.remove('active');
+                const stream = video.srcObject;
+                const tracks = stream.getTracks();
+                tracks.forEach(track => track.stop());
+            }, 'image/jpeg');
+        });
+
+        uploadButton.addEventListener('click', async () => {
+            if (uploadedFiles.length === 0) {
+                alert('Please select at least one file to upload');
+                return;
+            }
+            
+            uploadButton.disabled = true;
+            uploadButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading... It may take a while!!!';
+            
+            const formData = new FormData();
+            uploadedFiles.forEach(({ file, name }) => {
+                formData.append('files', file, name);
+            });
+
+            try {
+                const response = await fetch('/upload_files/', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    uploadButton.innerHTML = '<i class="fas fa-check"></i> Upload Complete';
+                    setTimeout(() => {
+                        alert('Files uploaded successfully');
+                        uploadedFiles = [];
+                        fileList.innerHTML = '';
+                        showEmptyState();
+                        uploadButton.disabled = false;
+                        uploadButton.innerHTML = '<i class="fas fa-upload"></i> Upload Files';
+                    }, 1000);
+                } else {
+                    throw new Error('Server responded with an error');
+                }
+            } catch (error) {
+                alert('Upload failed: ' + error.message);
+                uploadButton.disabled = false;
+                uploadButton.innerHTML = '<i class="fas fa-upload"></i> Upload Files';
+            }
+        });
+        showEmptyState();
+    </script>
+    <script>
+        document.getElementById("logo").addEventListener("click", function() {
+            window.location.href = "/home";  
+        });
+    
+        document.getElementById("logoutBtn").addEventListener("click", function() {
+            window.location.href = "/";  
+        });
+    </script>
+</body>
+</html>

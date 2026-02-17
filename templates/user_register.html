@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link rel="stylesheet" href="/static/global.css" />
+    <link rel="stylesheet" href="/static/register.css" />
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="form-header">
+        <div class="form-icon">✨</div>
+        <h2>Create Account</h2>
+      </div>
+      <form id="registerform">
+        {% csrf_token %}
+        <a href="{% url 'google_login_start' %}" class="google-btn">Sign up with Google</a>
+        <div class="divider">
+          <span>or</span>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="firstname">First Name</label>
+            <input type="text" id="firstname" name="firstname" required />
+          </div>
+          <div>
+            <label for="lastname">Last Name</label>
+            <input type="text" id="lastname" name="lastname" required />
+          </div>
+        </div>
+
+        <div>
+          <label for="useremail">Email Address</label>
+          <input type="email" id="useremail" name="useremail" required />
+        </div>
+
+        <div>
+          <label for="phonenumber">Phone Number</label>
+          <input type="tel" id="phonenumber" name="phonenumber" required />
+        </div>
+
+        <div class="form-row">
+          <div>
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender" required>
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" name="dob" required />
+          </div>
+        </div>
+
+        <div>
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+
+        <button type="submit">Register</button>
+        <a href="{% url 'user_login' %}" class="button"
+          >Already have an account? Login</a
+        >
+      </form>
+      <p id="message"></p>
+    </div>
+
+    <script>
+      document
+        .getElementById("registerform")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); 
+
+          let formData = {
+            firstname: document.getElementById("firstname").value,
+            lastname: document.getElementById("lastname").value,
+            useremail: document.getElementById("useremail").value,
+            phonenumber: document.getElementById("phonenumber").value,
+            gender: document.getElementById("gender").value,
+            dob: document.getElementById("dob").value,
+            password: document.getElementById("password").value,
+          };
+
+          fetch("{% url 'register_user' %}", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": document.querySelector(
+                "[name=csrfmiddlewaretoken]"
+              ).value,
+            },
+            body: JSON.stringify(formData),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.redirect_url) {
+                window.location.href = data.redirect_url; 
+              } else {
+                document.getElementById("message").textContent =
+                  data.message || "Registration failed.";
+              }
+            })
+            .catch((error) => console.error("Error:", error));
+        });
+    </script>
+  </body>
+</html>

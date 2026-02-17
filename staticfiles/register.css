@@ -1,0 +1,99 @@
+
+.login-container {
+    max-width: 600px;
+    margin: auto;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row > * {
+    flex: 1;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text-color);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#registerform {
+    gap: 15px;
+}
+
+#registerform button {
+    margin-top: 10px;
+}
+
+input:invalid, select:invalid {
+    border-color: var(--error-color);
+}
+
+input:valid, select:valid {
+    border-color: #e2e8f0;
+}
+
+.password-strength {
+    height: 5px;
+    border-radius: 3px;
+    margin-top: 5px;
+    background-color: #e2e8f0;
+    position: relative;
+    overflow: hidden;
+}
+
+.password-strength-bar {
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.weak {
+    width: 33%;
+    background-color: var(--error-color);
+}
+
+.medium {
+    width: 66%;
+    background-color: #f6c23e;
+}
+
+.strong {
+    width: 100%;
+    background-color: var(--success-color);
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    margin-left: 5px;
+    font-size: 14px;
+    color: var(--primary-color);
+    cursor: help;
+}
+
+.tooltip .tooltip-text {
+    visibility: hidden;
+    width: 200px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}

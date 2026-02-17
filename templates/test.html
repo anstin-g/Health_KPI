@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+ 
+        iframe {
+            width: 100%;
+            height: 90vh;
+            border: none;
+        }
+ 
+        #viewer {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+ 
+    <h1>View Report Document</h1>
+ 
+    <form id="docForm">
+        <label for="documentName">Enter Document Name:</label>
+        <input type="text" id="documentName" name="document_name" required>
+        <button type="submit">View Document</button>
+    </form>
+ 
+    <div id="viewer" style="display:none;">
+        <h2>Document Preview</h2>
+        <iframe id="pdfFrame" src=""></iframe>
+    </div>
+ 
+    <script>
+        document.getElementById('docForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const docName = document.getElementById('documentName').value;
+            const iframe = document.getElementById('pdfFrame');
+            const viewer = document.getElementById('viewer');
+ 
+            // Assuming your Django view is routed at /report/showcase/
+            iframe.src = `/showcase_report/?document_name=${encodeURIComponent(docName)}`;
+            viewer.style.display = 'block';
+        });
+    </script>
+ 
+</body>
+</html>

@@ -1,0 +1,422 @@
+/* dashboard.css - Styling for the dashboard page */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+.main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+h2 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+/* Featured documents section */
+.featured-documents {
+    margin-bottom: 40px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: calc(33.33% - 20px);
+    box-sizing: border-box;
+    position: relative;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.card.selected {
+    border: 2px solid #4CAF50;
+    background-color: rgba(76, 175, 80, 0.05);
+}
+
+.card h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.details {
+    margin-bottom: 15px;
+}
+
+.details p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+/* Checkbox styling */
+.checkbox-wrapper {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+input[type="checkbox"] {
+    opacity: 0;
+    position: absolute;
+}
+
+.custom-checkbox {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked + .custom-checkbox::after {
+    content: '\2713';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #4CAF50;
+    font-size: 16px;
+}
+
+/* Table styling */
+/* Modern table styling */
+.table-container {
+    overflow-x: auto;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    background-color: transparent;
+    font-size: 15px;
+    color: #333;
+}
+
+thead th {
+    text-align: left;
+    padding: 16px 20px;
+    background-color: #f0f0f0;
+    color: #555;
+    font-weight: 600;
+    border-bottom: 2px solid #ddd;
+    border-radius: 8px 8px 0 0;
+}
+
+tbody tr {
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    border-radius: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+tbody tr:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+tbody td {
+    padding: 16px 20px;
+    border-bottom: none;
+    background-color: #fff;
+    vertical-align: middle;
+}
+
+tbody td:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+tbody td:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+/* Optional: Zebra striping */
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+
+.details-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.details-list li {
+    margin-bottom: 5px;
+}
+
+/* View Report button */
+.view-report-btn {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #3f51b5;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.view-report-btn:hover {
+    background-color: #303f9f;
+}
+
+/* Analyze button */
+.analyze-btn {
+    display: block;
+    width: max-content;
+    margin: 20px auto;
+    padding: 12px 25px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.analyze-btn:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+.count {
+    display: none; /* Hidden since we no longer track selected files */
+}
+
+.no-documents {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-style: italic;
+}
+
+
+/* Responsive design */
+@media (max-width: 992px) {
+    .card {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 768px) {
+    .card {
+        margin-top: 40px;
+        width: 100%;
+    }
+    
+    th, td {
+        padding: 8px 10px;
+    }
+}
+
+
+/* Document Review Popup */
+.document-review-overlay {
+    /* Inline section (not a popup) */
+    position: static !important;
+    inset: auto !important;
+    background-color: transparent;
+    display: none;
+    margin: 20px 0 30px 0;
+    z-index: auto;
+}
+
+.document-review-modal {
+    /* Card-style container within the page */
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: none;
+    max-height: none;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.document-review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.document-review-header h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.close-review-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background-color: rgba(108, 117, 125, 0.1);
+    color: var(--text-light);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.close-review-btn:hover {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+.document-card-container {
+    margin-top: 8px;
+    margin-bottom: 16px;
+    padding-right: 4px;
+    overflow-y: visible;
+}
+
+.document-card {
+    border: 1px solid #e6e6e6;
+    border-radius: 12px;
+    padding: 14px 16px;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.document-card-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.document-name {
+    font-weight: 600;
+    color: #333;
+    max-width: 70%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.document-first-name,
+.document-extracted-name {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.document-first-name span,
+.document-extracted-name span {
+    font-size: 0.75rem;
+    color: #666;
+    margin-bottom: 2px;
+}
+
+.document-first-name strong,
+.document-extracted-name strong {
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.document-card-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.accept-btn,
+.discard-btn {
+    min-width: 90px;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.accept-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+.accept-btn:hover {
+    background-color: #45a049;
+}
+
+.discard-btn {
+    background-color: #dc3545;
+    color: white;
+}
+.discard-btn:hover {
+    background-color: #c82333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .upload-card {
+        flex-direction: column;
+    }
+    
+    .upload-option {
+        width: 100%;
+    }
+    
+    .file-naming {
+        flex-direction: column;
+    }
+    
+    .file-naming input, .file-naming .btn {
+        width: 100%;
+    }
+    
+    .preview-section h2 {
+        text-align: center;
+    }
+    
+    .upload-label {
+        padding: 20px;
+    }
+    
+    .upload-label i {
+        font-size: 2rem;
+    }
+}

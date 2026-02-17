@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - My Health App</title>
+    <link rel="stylesheet" href="/static/global.css">
+    <link rel="stylesheet" href="/static/login.css">
+</head>
+<body>
+    <div class="main-content">
+        <div class="login-container">
+            <div class="form-header">
+                <div class="form-icon">👤</div>
+                <h2>Login</h2>
+            </div>
+            <form id="loginForm">
+                {% csrf_token %}
+                <input type="text" id="userid" name="userid" placeholder="Email" required>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+                <div style="text-align:center; display:flex; justify-content:center;">
+                    <span>or</span>
+                </div>
+                <a href="{% url 'google_login_start' %}" class="button" style="display:flex; align-items:center; justify-content:center; gap:8px; margin-top:10px;">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style="width:18px; height:18px;">
+                    <span>Continue with Google</span>
+                </a>
+                <a href="{% url 'register_user' %}" class="button">Create an Account</a>
+            </form>
+            <p id="message"></p>
+        </div>
+    </div>
+    
+    <script src="/static/user_login.js"></script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+/* login.css - Specific styles for the login page */
+
+/* Added for navbar integration */
+.main-content {
+    padding-top: 100px; /* Space for the fixed navbar */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 100px);
+}
+
+.login-container {
+    width: 620px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Custom styling for the login form */
+#loginForm {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: #fff;
+    color: #333;
+    padding: 12px;
+    border: 1px solid #dadce0;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.google-btn:hover {
+    background-color: #f8f9fa;
+    border-color: #dadce0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e0e0e0;
+}
+
+.divider span {
+    color: #888;
+    font-size: 14px;
+}
+
+#loginForm input {
+    border-left: 4px solid var(--primary-color);
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#loginForm button {
+    background-color: var(--primary-color, #43cea2);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#loginForm button:hover {
+    background-color: var(--primary-hover, #3ab28d);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#loginForm .button {
+    text-align: center;
+    background-color: transparent;
+    color: var(--primary-color, #43cea2);
+    text-decoration: none;
+    padding: 10px;
+    border: 1px solid var(--primary-color, #43cea2);
+    border-radius: 6px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+#loginForm .button:hover {
+    background-color: #f5f5f5;
+}
+
+#message {
+    margin-top: 15px;
+    text-align: center;
+    color: #ff3860;
+}
+
+/* Remember me checkbox styling if you want to add it */
+.remember-me {
+    display: flex;
+    align-items: center;
+    margin-top: -10px;
+}
+
+.remember-me input[type="checkbox"] {
+    width: auto;
+    margin-right: 10px;
+}
+
+/* Forgot password link styling if you want to add it */
+.forgot-password {
+    text-align: right;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+.forgot-password a {
+    color: var(--primary-color);
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}

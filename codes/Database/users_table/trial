@@ -1,0 +1,49 @@
+import pyodbc
+import bcrypt
+from datetime import datetime
+
+# Connect to the database
+conn = pyodbc.connect(
+    'Driver={ODBC Driver 18 for SQL Server};Server=tcp:healthkpiserver.database.windows.net,1433;Database=healthkpi-database;Uid=mprajwal@asofttek.com;Pwd=124@02pmm;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;Authentication=ActiveDirectoryPassword'
+)
+cursor = conn.cursor()
+
+# Helper: Hash password
+def hash_password(password):
+    salt = bcrypt.gensalt()
+    return bcrypt.hashpw(password.encode('utf-8'), salt)
+
+# Helper: Verify password
+def verify_password(input_password, stored_hash):
+    return bcrypt.checkpw(input_password.encode('utf-8'), stored_hash.encode('utf-8'))
+
+# CREATE
+def create_user(first_name, last_name, email, password, phone=None, profile_pic=None, dob=None, gender=None):
+    password_hash = hash_password(password).decode('utf-8')  # decode to store as string in DB
+    query = '''
+    INSERT INTO Users (FirstName, LastName, Email, PasswordHash, PhoneNumber, ProfilePictureUrl, DateOfBirth, Gender)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    '''
+    cursor.execute(query, (first_name, last_name, email, password_hash, phone, profile_pic, dob, gender))
+    conn.commit()
+    print("User created successfully.")
+
+# READ + Password Check
+def login_user(email, input_password):
+    query = 'SELECT UserID, FirstName, PasswordHash FROM Users WHERE Email = ?'
+    cursor.execute(query, (email,))
+    user = cursor.fetchone()
+    if user:
+        user_id, name, stored_hash = user
+        if verify_password(input_password, stored_hash):
+            print(f"✅ Login successful! Welcome, {name}.")
+        else:
+            print("❌ Incorrect password.")
+    else:
+        print("❌ User not found.")
+
+# Example usage
+if __name__ == "__main__":
+    # create_user('Alice', 'Smith', 'alice@example.com', 'MySecurePass123!')  
+    login_user('alice@example.com', 'MySecurePass12!')
+    # pass
