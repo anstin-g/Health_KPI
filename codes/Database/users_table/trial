@@ -3,9 +3,6 @@ import bcrypt
 from datetime import datetime
 
 # Connect to the database
-conn = pyodbc.connect(
-    'Driver={ODBC Driver 18 for SQL Server};Server=tcp:healthkpiserver.database.windows.net,1433;Database=healthkpi-database;Uid=mprajwal@asofttek.com;Pwd=124@02pmm;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;Authentication=ActiveDirectoryPassword'
-)
 cursor = conn.cursor()
 
 # Helper: Hash password
